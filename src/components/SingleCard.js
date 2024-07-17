@@ -1,5 +1,5 @@
 import cover from "../assets/img/cover.svg";
-//import "./SingleCard.css";
+import "./SingleCard.css";
 
 export default function SingleCard({ card, handleChoice, flipped, disabled }) {
   const handleClick = () => {

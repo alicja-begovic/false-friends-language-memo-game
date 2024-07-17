@@ -1,5 +1,5 @@
 //import logo from './logo.svg';
-import React, {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 import SingleCard from "./components/SingleCard.js";
@@ -13,16 +13,17 @@ import animal_czech from "./assets/sound/animal_czech.mp3";
 import animal_english from "./assets/sound/animal_english.mp3";
 import human_czech from "./assets/sound/human_czech.mp3";
 import human_english from "./assets/sound/human_english.mp3";
+// import correct_ding from "./assets/sound/correct_ding.mp3";
+// import wrong_ding from "./assets/sound/wrong_ding.mp3";
 
 const CARD_IMAGES = [
-  {id: '001', src: animal, matched: false, sound: animal_czech},
-  {id: '001', src: animal2, matched: false, sound: animal_english},
-  {id: '002', src: human, matched: false, sound: human_czech},
-  {id: '002', src: human2, matched: false, sound: human_english}
-]
+  { id: "001", src: animal, matched: false, sound: animal_czech },
+  { id: "001", src: animal2, matched: false, sound: animal_english },
+  { id: "002", src: human, matched: false, sound: human_czech },
+  { id: "002", src: human2, matched: false, sound: human_english },
+];
 
-
-function App() {
+export default function App() {
   const [cards, setCards] = useState([]);
   const [turns, setTurns] = useState(0);
   const [choiceOne, setChoiceOne] = useState(null);
@@ -40,6 +41,9 @@ function App() {
     setCards(shuffledCards);
     setTurns(0);
   };
+
+  // let correct_answer = new Audio(correct_ding);
+  // let wrond_ding = new Audio(wrong_ding);
 
   //handle a choice
   const handleChoice = (card) => {
@@ -67,6 +71,20 @@ function App() {
     }
   }, [choiceOne, choiceTwo]);
 
+  // const handleCardClick = (cardId) => {
+  //   // Play sound
+  //   const card = cards.find((card) => card.id === cardId);
+  //   console.log(card)
+  //   const sound = new Audio(card.sound);
+  //   sound.play();
+  // };
+
+  const handleCardClick = (clickedCard) => {
+    // Play the associated sound when card is clicked
+    const audio = new Audio(clickedCard.sound);
+    audio.play();
+  };
+
   //reset choices & increase turn
   const resetTurn = () => {
     setChoiceOne(null);
@@ -80,16 +98,31 @@ function App() {
     shuffleCards();
   }, []);
 
+  // let correct_sound = new Audio(correct_ding);
+  // let wrong_sound = new Audio(wrong_ding);
+
+  // if (choiceOne === choiceTwo) {
+  //   correct_sound.play();
+  // } else {
+  //   wrong_sound.play()
+  // }
+
+  // if (choiceOne !== choiceTwo) {
+  //   wrong_sound.play()
+  // }
+
   return (
     <div className="App">
-      <h1>Language challenge German - Dutch</h1>
+      <h1>Language challenge English - Czech</h1>
       <button onClick={shuffleCards}>New Game</button>
       <div className="card-grid">
         {cards.map((card) => (
           <SingleCard
             key={card.key}
             card={card}
+            sound={card.sound}
             handleChoice={handleChoice}
+            onClick={handleCardClick}
             flipped={card === choiceOne || card === choiceTwo || card.matched}
             disabled={disabled}
           />
@@ -99,9 +132,6 @@ function App() {
     </div>
   );
 }
-
-export default App();
-
 
 /*
 
