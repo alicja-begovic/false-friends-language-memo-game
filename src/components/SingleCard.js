@@ -1,4 +1,5 @@
-import cover from "../assets/img/cover.svg";
+//import cover from "../assets/img/cover.svg";
+import cover2 from "../assets/img/cover_false_friends.svg";
 import "./SingleCard.css";
 
 export default function SingleCard(
@@ -16,7 +17,7 @@ export default function SingleCard(
         <img className="front" src={card.src} alt="card front" />
         <img
           className="back"
-          src={cover}
+          src={cover2}
           onClick={handleClick}
           alt="card back"
         />
