@@ -1,7 +1,10 @@
 import cover from "../assets/img/cover.svg";
 import "./SingleCard.css";
 
-export default function SingleCard({ card, handleChoice, flipped, disabled }) {
+export default function SingleCard(
+  { card, handleChoice, flipped, disabled },
+  props
+) {
   const handleClick = () => {
     if (!disabled) {
       handleChoice(card);
@@ -17,6 +20,7 @@ export default function SingleCard({ card, handleChoice, flipped, disabled }) {
           onClick={handleClick}
           alt="card back"
         />
+        <audio src={props.sound} />
       </div>
     </div>
   );

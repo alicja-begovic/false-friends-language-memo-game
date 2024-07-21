@@ -1,4 +1,3 @@
-//import logo from './logo.svg';
 import { useState, useEffect } from "react";
 import "./App.css";
 
@@ -13,8 +12,6 @@ import animal_czech from "./assets/sound/animal_czech.mp3";
 import animal_english from "./assets/sound/animal_english.mp3";
 import human_czech from "./assets/sound/human_czech.mp3";
 import human_english from "./assets/sound/human_english.mp3";
-// import correct_ding from "./assets/sound/correct_ding.mp3";
-// import wrong_ding from "./assets/sound/wrong_ding.mp3";
 
 const CARD_IMAGES = [
   { id: "001", src: animal, matched: false, sound: animal_czech },
@@ -42,11 +39,9 @@ export default function App() {
     setTurns(0);
   };
 
-  // let correct_answer = new Audio(correct_ding);
-  // let wrond_ding = new Audio(wrong_ding);
-
   //handle a choice
   const handleChoice = (card) => {
+    playAudio(card.sound);
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
@@ -71,18 +66,10 @@ export default function App() {
     }
   }, [choiceOne, choiceTwo]);
 
-  // const handleCardClick = (cardId) => {
-  //   // Play sound
-  //   const card = cards.find((card) => card.id === cardId);
-  //   console.log(card)
-  //   const sound = new Audio(card.sound);
-  //   sound.play();
-  // };
-
-  const handleCardClick = (clickedCard) => {
-    // Play the associated sound when card is clicked
-    const audio = new Audio(clickedCard.sound);
-    audio.play();
+  //audio player
+  const playAudio = (audio) => {
+    const audioToPlay = new Audio(audio);
+    audioToPlay.play();
   };
 
   //reset choices & increase turn
@@ -98,19 +85,6 @@ export default function App() {
     shuffleCards();
   }, []);
 
-  // let correct_sound = new Audio(correct_ding);
-  // let wrong_sound = new Audio(wrong_ding);
-
-  // if (choiceOne === choiceTwo) {
-  //   correct_sound.play();
-  // } else {
-  //   wrong_sound.play()
-  // }
-
-  // if (choiceOne !== choiceTwo) {
-  //   wrong_sound.play()
-  // }
-
   return (
     <div className="App">
       <h1>Language challenge English - Czech</h1>
@@ -120,9 +94,7 @@ export default function App() {
           <SingleCard
             key={card.key}
             card={card}
-            sound={card.sound}
             handleChoice={handleChoice}
-            onClick={handleCardClick}
             flipped={card === choiceOne || card === choiceTwo || card.matched}
             disabled={disabled}
           />
@@ -135,43 +107,6 @@ export default function App() {
 
 /*
 
-// function App() {
-//   let soundOne = new Audio(animal_czech);
-//   let soundTwo = new Audio(animal_english);
-//   let soundThree = new Audio(human_czech);
-//   let soundFour = new Audio(human_english);
 
-//   const startOne = () => {
-//     soundOne.play();
-//   };
-//   const startTwo = () => {
-//     soundTwo.play();
-//   };
-//   const startThree = () => {
-//     soundThree.play();
-//   };
-//   const startFour = () => {
-//     soundFour.play();
-//   };
-
-//   return (
-//     <>
-//       <div>
-//         <img src={animal} alt="Animal One" onClick={startOne} />
-//       </div>
-//       <div>
-//         <img src={animal2} alt="Animal Two" onClick={startTwo} />
-//       </div>
-//       <div>
-//         <img src={human} alt="Human One" onClick={startThree} />
-//       </div>
-//       <div>
-//         <img src={human2} alt="Human Two" onClick={startFour} />
-//       </div>
-//     </>
-//   );
-// }
-
-// export default App;
 
 */
