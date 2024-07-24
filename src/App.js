@@ -2,23 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 
 import SingleCard from "./components/SingleCard.js";
-
-import animal from "./assets/img/icon_animal.svg";
-import animal2 from "./assets/img/icon_animal2.svg";
-import human from "./assets/img/icon_human.svg";
-import human2 from "./assets/img/icon_human2.svg";
-
-import animal_czech from "./assets/sound/animal_czech.mp3";
-import animal_english from "./assets/sound/animal_english.mp3";
-import human_czech from "./assets/sound/human_czech.mp3";
-import human_english from "./assets/sound/human_english.mp3";
-
-const CARD_IMAGES = [
-  { id: "001", src: animal, matched: false, sound: animal_czech },
-  { id: "001", src: animal2, matched: false, sound: animal_english },
-  { id: "002", src: human, matched: false, sound: human_czech },
-  { id: "002", src: human2, matched: false, sound: human_english },
-];
+import CARD_IMAGES_PL_CZ from "./database.js";
 
 export default function App() {
   const [cards, setCards] = useState([]);
@@ -29,7 +13,7 @@ export default function App() {
 
   //shuffle cards
   const shuffleCards = () => {
-    const shuffledCards = [...CARD_IMAGES]
+    const shuffledCards = [...CARD_IMAGES_PL_CZ]
       .sort(() => Math.random() - 0.5)
       .map((card) => ({ ...card, key: Math.random() }));
 
