@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 
 import SingleCard from "./components/SingleCard.js";
-import CARD_IMAGES_PL_CZ from "./database.js";
+import CARD_IMAGES_PL_CZ from "./source.js";
 
 export default function App() {
   const [cards, setCards] = useState([]);
@@ -10,8 +10,9 @@ export default function App() {
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
+  const [translation, setTranslation] = useState(""); // Add state for translation
 
-  //shuffle cards
+  // Shuffle cards
   const shuffleCards = () => {
     const shuffledCards = [...CARD_IMAGES_PL_CZ]
       .sort(() => Math.random() - 0.5)
@@ -21,19 +22,21 @@ export default function App() {
     setChoiceTwo(null);
     setCards(shuffledCards);
     setTurns(0);
+    setTranslation(""); // Clear translation on new game
   };
 
-  //handle a choice
+  // Handle a choice
   const handleChoice = (card) => {
     playAudio(card.sound);
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
-  //compare 2 selected cards
+  // Compare 2 selected cards
   useEffect(() => {
     if (choiceOne && choiceTwo) {
       setDisabled(true);
       if (choiceOne.id === choiceTwo.id) {
+        // Update the matched state and translation
         setCards((prevCards) => {
           return prevCards.map((card) => {
             if (card.id === choiceOne.id) {
@@ -43,20 +46,22 @@ export default function App() {
             }
           });
         });
+        setTranslation(`Matched: ${choiceOne.translation}`); // Set the translation here
         resetTurn();
       } else {
+        setTranslation(""); // Clear the translation if cards do not match
         setTimeout(() => resetTurn(), 2000);
       }
     }
   }, [choiceOne, choiceTwo]);
 
-  //audio player
+  // Audio player
   const playAudio = (audio) => {
     const audioToPlay = new Audio(audio);
     audioToPlay.play();
   };
 
-  //reset choices & increase turn
+  // Reset choices & increase turn
   const resetTurn = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
@@ -64,15 +69,17 @@ export default function App() {
     setDisabled(false);
   };
 
-  //start a new game automatically
+  // Start a new game automatically
   useEffect(() => {
     shuffleCards();
   }, []);
 
   return (
     <div className="App">
-      <h1>Language challenge English - Czech</h1>
-      <button onClick={shuffleCards}>New Game</button>
+      <h1>False Friends / Polish - Czech edition</h1>
+      <div className="button">
+        <button onClick={shuffleCards}>New Game</button>
+      </div>
       <div className="card-grid">
         {cards.map((card) => (
           <SingleCard
@@ -85,12 +92,7 @@ export default function App() {
         ))}
       </div>
       <p>Turns: {turns}</p>
+      <p>Translation: {translation}</p> {/* Display the translation */}
     </div>
   );
 }
-
-/*
-
-
-
-*/
