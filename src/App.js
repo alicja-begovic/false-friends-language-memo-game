@@ -14,13 +14,29 @@ export default function App() {
 
   // Shuffle cards
   const shuffleCards = () => {
-    const shuffledCards = [...CARD_IMAGES_PL_CZ]
+    // Extract unique pairs
+    const uniquePairs = [];
+    const uniqueIds = new Set();
+    
+    CARD_IMAGES_PL_CZ.forEach((card) => {
+      if (!uniqueIds.has(card.id)) {
+        const pair = CARD_IMAGES_PL_CZ.filter((c) => c.id === card.id);
+        uniquePairs.push(pair);
+        uniqueIds.add(card.id);
+      }
+    });
+  
+    // Randomly select 6 pairs
+    const selectedPairs = uniquePairs
       .sort(() => Math.random() - 0.5)
-      .map((card) => ({ ...card, key: Math.random() }));
-
+      .slice(0, 6);
+  
+    // Flatten the selected pairs into a single array and shuffle
+    const selectedCards = selectedPairs.flat().sort(() => Math.random() - 0.5).map((card) => ({ ...card, key: Math.random() }));
+  
     setChoiceOne(null);
     setChoiceTwo(null);
-    setCards(shuffledCards);
+    setCards(selectedCards);
     setTurns(0);
     setTranslation(""); // Clear translation on new game
   };
@@ -46,7 +62,7 @@ export default function App() {
             }
           });
         });
-        setTranslation(`Matched: ${choiceOne.translation}`); // Set the translation here
+        setTranslation(`Translation: ${choiceOne.translation} - ${choiceTwo.translation}`); // Set the translation here
         resetTurn();
       } else {
         setTranslation(""); // Clear the translation if cards do not match
@@ -92,7 +108,7 @@ export default function App() {
         ))}
       </div>
       <p>Turns: {turns}</p>
-      <p>Translation: {translation}</p> {/* Display the translation */}
+      <p>{translation}</p> {/* Display the translation */}
     </div>
   );
 }
