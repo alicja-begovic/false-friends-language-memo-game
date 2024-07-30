@@ -26,10 +26,10 @@ export default function App() {
       }
     });
   
-    // Randomly select 6 pairs
+    // Randomly select 12 pairs
     const selectedPairs = uniquePairs
       .sort(() => Math.random() - 0.5)
-      .slice(0, 6);
+      .slice(0, 12);
   
     // Flatten the selected pairs into a single array and shuffle
     const selectedCards = selectedPairs.flat().sort(() => Math.random() - 0.5).map((card) => ({ ...card, key: Math.random() }));
