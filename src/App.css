@@ -8,8 +8,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  display: block;
+  flex-direction: column;
 }
+
 button {
   background: none;
   border: 2px solid #000000;
@@ -20,9 +21,9 @@ button {
   cursor: pointer;
   font-size: 1em;
 }
+
 button:hover {
   background: #F1D95B;
-  /*color: #747272;*/
 }
 
 .card-grid {
@@ -34,7 +35,7 @@ button:hover {
 
 h1 {
   text-align: center;
-  margin: 0
+  margin: 0;
 }
 
 h3 {
@@ -50,4 +51,79 @@ h3 {
 p {
   text-align: center;
   font-weight: 700;
+}
+
+.players {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.player {
+  border: 2px solid transparent;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.player input {
+  text-align: center;
+  font-size: 1em;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 2px solid #000000;
+}
+
+.player.active {
+  border-color: #000000;
+}
+
+.card {
+  position: relative;
+}
+
+.card img {
+  width: 100%;
+  display: block;
+  border: 2px solid #fff;
+  border-radius: 6px;
+}
+
+.card .front {
+  transform: rotateY(90deg);
+  transition: all ease-in 0.2s;
+  position: absolute;
+}
+
+.flipped .front {
+  transform: rotateY(0deg);
+  transition-delay: 0.2s;
+}
+
+.card .back {
+  transition: all ease-in 0.2s;
+  transition-delay: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.flipped .back {
+  transform: rotateY(90deg);
+  transition-delay: 0s;
+}
+
+.card-number {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  border-radius: 5px;
+  pointer-events: none;
 }
