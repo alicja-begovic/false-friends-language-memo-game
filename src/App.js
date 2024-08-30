@@ -9,17 +9,17 @@ export default function App() {
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
   const [disabled, setDisabled] = useState(false);
-  const [translation, setTranslation] = useState(""); // Add state for translation
+  const [translation, setTranslation] = useState("");
   const [player1, setPlayer1] = useState({ name: "Player 1", score: 0 });
   const [player2, setPlayer2] = useState({ name: "Player 2", score: 0 });
   const [currentPlayer, setCurrentPlayer] = useState(1);
+  const [difficulty, setDifficulty] = useState("easy"); // Add state for difficulty
 
-  // Shuffle cards
+  // Shuffle cards based on difficulty level
   const shuffleCards = () => {
-    // Extract unique pairs
     const uniquePairs = [];
     const uniqueIds = new Set();
-    
+
     CARD_IMAGES_PL_CZ.forEach((card) => {
       if (!uniqueIds.has(card.id)) {
         const pair = CARD_IMAGES_PL_CZ.filter((c) => c.id === card.id);
@@ -27,37 +27,44 @@ export default function App() {
         uniqueIds.add(card.id);
       }
     });
-  
-    // Randomly select 12 pairs
+
+    let numPairs;
+    if (difficulty === "easy") {
+      numPairs = 6; // 12 cards total
+    } else if (difficulty === "medium") {
+      numPairs = 9; // 18 cards total
+    } else if (difficulty === "hard") {
+      numPairs = 12; // 24 cards total
+    }
+
     const selectedPairs = uniquePairs
       .sort(() => Math.random() - 0.5)
-      .slice(0, 9);
-  
-    // Flatten the selected pairs into a single array and shuffle
-    const selectedCards = selectedPairs.flat().sort(() => Math.random() - 0.5).map((card) => ({ ...card, key: Math.random() }));
-  
+      .slice(0, numPairs);
+
+    const selectedCards = selectedPairs
+      .flat()
+      .sort(() => Math.random() - 0.5)
+      .map((card) => ({ ...card, key: Math.random() }));
+
     setChoiceOne(null);
     setChoiceTwo(null);
     setCards(selectedCards);
     setTurns(0);
-    setTranslation(""); // Clear translation on new game
+    setTranslation("");
     setPlayer1({ ...player1, score: 0 });
     setPlayer2({ ...player2, score: 0 });
     setCurrentPlayer(1);
   };
 
-  // Handle a choice
   const handleChoice = (card) => {
     playAudio(card.sound);
     choiceOne ? setChoiceTwo(card) : setChoiceOne(card);
   };
 
-  // Compare 2 selected cards
   useEffect(() => {
     if (choiceOne && choiceTwo) {
       setDisabled(true);
       if (choiceOne.id === choiceTwo.id) {
-        // Update the matched state and translation
         setCards((prevCards) => {
           return prevCards.map((card) => {
             if (card.id === choiceOne.id) {
@@ -67,8 +74,9 @@ export default function App() {
             }
           });
         });
-        setTranslation(`Translation: ${choiceOne.translation} - ${choiceTwo.translation}`); // Set the translation here
-        // Update score for the current player
+        setTranslation(
+          `Translation: ${choiceOne.translation} - ${choiceTwo.translation}`
+        );
         if (currentPlayer === 1) {
           setPlayer1({ ...player1, score: player1.score + 1 });
         } else {
@@ -76,22 +84,20 @@ export default function App() {
         }
         resetTurn();
       } else {
-        setTranslation(""); // Clear the translation if cards do not match
+        setTranslation("");
         setTimeout(() => {
-          setCurrentPlayer(currentPlayer === 1 ? 2 : 1); // Switch player
+          setCurrentPlayer(currentPlayer === 1 ? 2 : 1);
           resetTurn();
         }, 2000);
       }
     }
   }, [choiceOne, choiceTwo]);
 
-  // Audio player
   const playAudio = (audio) => {
     const audioToPlay = new Audio(audio);
     audioToPlay.play();
   };
 
-  // Reset choices & increase turn
   const resetTurn = () => {
     setChoiceOne(null);
     setChoiceTwo(null);
@@ -99,10 +105,9 @@ export default function App() {
     setDisabled(false);
   };
 
-  // Start a new game automatically
   useEffect(() => {
     shuffleCards();
-  }, []);
+  }, [difficulty]); // Shuffle cards when the difficulty changes
 
   return (
     <div className="App">
@@ -125,6 +130,11 @@ export default function App() {
           <p>Score: {player2.score}</p>
         </div>
       </div>
+      <div className="difficulty-buttons">
+        <button onClick={() => setDifficulty("easy")}>Easy</button>
+        <button onClick={() => setDifficulty("medium")}>Medium</button>
+        <button onClick={() => setDifficulty("hard")}>Hard</button>
+      </div>
       <div className="button">
         <button onClick={shuffleCards}>New Game</button>
       </div>
@@ -136,12 +146,12 @@ export default function App() {
             handleChoice={handleChoice}
             flipped={card === choiceOne || card === choiceTwo || card.matched}
             disabled={disabled}
-            index={index} // Pass the index to SingleCard
+            index={index}
           />
         ))}
       </div>
       <p>Turns: {turns}</p>
-      <p>{translation}</p> {/* Display the translation */}
+      <p>{translation}</p>
     </div>
   );
 }

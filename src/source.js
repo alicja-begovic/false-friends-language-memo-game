@@ -8,7 +8,7 @@ import zly_pl_i from "./assets/img/07-zly-pl-i.svg";
 import zly_cz_i from "./assets/img/08-zly-cz-i.svg";
 import czerstwy_pl_i from "./assets/img/09-czerstwy-pl-i.svg";
 import cerstvy_cz_i from "./assets/img/10-cerstvy-cz-i.svg";
-import dziadek_pl_i from "./assets/img/dziadek.svg";
+import dziadek_pl_i from "./assets/img/11-dziadek-pl-i.svg";
 import dedek_cz_i from "./assets/img/12-dedek-cz-i.svg";
 import lada_pl_i from "./assets/img/13-lada-pl-i.svg";
 import lada_cz_i from "./assets/img/14-lada-cz-i.svg";
