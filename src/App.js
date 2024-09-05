@@ -112,6 +112,15 @@ export default function App() {
   return (
     <div className="App">
       <h1>False Friends / Polish - Czech edition</h1>
+
+      <div className="button">
+        <button onClick={shuffleCards}>New Game</button>
+      </div>
+      <div className="difficulty-buttons">
+        <button onClick={() => setDifficulty("easy")}>Easy</button>
+        <button onClick={() => setDifficulty("medium")}>Medium</button>
+        <button onClick={() => setDifficulty("hard")}>Hard</button>
+      </div>
       <div className="players">
         <div className={`player ${currentPlayer === 1 ? "active" : ""}`}>
           <input
@@ -129,14 +138,6 @@ export default function App() {
           />
           <p>Score: {player2.score}</p>
         </div>
-      </div>
-      <div className="difficulty-buttons">
-        <button onClick={() => setDifficulty("easy")}>Easy</button>
-        <button onClick={() => setDifficulty("medium")}>Medium</button>
-        <button onClick={() => setDifficulty("hard")}>Hard</button>
-      </div>
-      <div className="button">
-        <button onClick={shuffleCards}>New Game</button>
       </div>
       <div className="card-grid">
         {cards.map((card, index) => (
