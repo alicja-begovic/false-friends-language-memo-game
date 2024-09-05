@@ -23,7 +23,7 @@ import casopis_cz_i from "./assets/img/22-casopis-cz-i.svg";
 import list_pl_i from "./assets/img/23-list-pl-i.svg";
 import list_cz_i from "./assets/img/24-list-cz-i.svg";
 import zona_pl_i from "./assets/img/25-zona-pl-i.svg";
-import zena_cz_i from "./assets/img/26-zona-cz-i.svg";
+import zena_cz_i from "./assets/img/26-zena-cz-i.svg";
 
 import cena_pl_s from "./assets/sound/01-cena-pl-s.mp3";
 import cena_cz_s from "./assets/sound/02-cena-cz-s.mp3";
